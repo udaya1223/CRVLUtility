@@ -38,6 +38,12 @@ public:
 	// Make a chessboard pattern given the num. of rows & cols, square size in pixels, and square colors 
 	static void crvlMakeChessboardPattern(cv::Mat &outChessboard, int inRows, int inCols, int inSquareSize = 100, cv::Scalar color1 = CV_RGB(0, 0, 0), cv::Scalar color2 = CV_RGB(255, 255, 255)); 
 
+	// Sort a float array in ascending order
+	static void crvlQuickSort(std::vector<float> &src, int left, int right);
+
+	// Sort a float array in ascending order
+	static float findMode(vector<float> &src);
+	
 private:
 
 } CRVL;
