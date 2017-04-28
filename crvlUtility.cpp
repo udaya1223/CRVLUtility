@@ -271,7 +271,7 @@ void crvlUtility::crvlFindPlaneEquations(vector<cv::Point3f> &laserPoints3D, cv:
 		// find SVD of A
 		cv::SVD::compute(A, W, U, Vt);
 
-		// Vt´Â ÀÌ¹Ì Á¤·ÄÀÌ µÇ¾î ÀÖÀ½!
+		// VtëŠ” ì´ë¯¸ ì •ë ¬ì´ ë˜ì–´ ìˆìŒ!
 		planeNormal[0] = Vt.at<float>(3, 0);
 		planeNormal[1] = Vt.at<float>(3, 1);
 		planeNormal[2] = Vt.at<float>(3, 2);
@@ -279,7 +279,7 @@ void crvlUtility::crvlFindPlaneEquations(vector<cv::Point3f> &laserPoints3D, cv:
 		float dLen = sqrt(planeNormal.dot(planeNormal));
 		planeNormal /= dLen;
 
-		// Ä«¸Ş¶óÀÇ ¹æÇâ°ú Á¤¹İ´ë¶ó¸é.....
+		// ì¹´ë©”ë¼ì˜ ë°©í–¥ê³¼ ì •ë°˜ëŒ€ë¼ë©´.....
 		if (cameraDir.dot(planeNormal) > 0.) {
 			planeEquation = cv::Vec4f(-Vt.at<float>(3, 0), -Vt.at<float>(3, 1), -Vt.at<float>(3, 2), -Vt.at<float>(3, 3));
 		}
@@ -315,3 +315,62 @@ void crvlUtility::crvlMakeChessboardPattern(cv::Mat &outChessboard, int inRows, 
 	}
 }
 
+// Sort a float array in ascending order  
+void crvlUtility::crvlQuickSort(std::vector<float> &src, int left, int right) {
+
+	if (src.size() > 1){
+
+		int i = left, j = right;
+		float tmp;
+		double pivot = src[(left + right) / 2];
+
+		/* partition */
+		while (i <= j) {
+			while (src[i] < pivot)
+				i++;
+			while (src[j] > pivot)
+				j--;
+			if (i <= j) {
+				tmp = src[i];
+				src[i] = src[j];
+				src[j] = tmp;
+				i++;
+				j--;
+			}
+		};
+
+		/* recursion */
+		if (left < j)
+			crvlQuickSort(src, left, j);
+		if (i < right)
+			crvlQuickSort(src, i, right);
+	}
+}
+
+// Find the mode of a float array  
+float crvlUtility::findMode(vector<float> &src){
+	float number = src[src.size() - 1];
+	float mode = number;
+	int count = 1;
+	int countMode = 1;
+
+	for (int i = src.size() - 2; i >= 0; i--)
+	{
+		if (src[i] == number)
+		{
+			count++;
+		}
+		else
+		{
+			if (count > countMode)
+			{
+				countMode = count;
+				mode = number;
+			}
+			count = 1;
+			number = src[i];
+		}
+	}
+	//printf("Mode : %f\n", mode);
+	return mode;
+}
