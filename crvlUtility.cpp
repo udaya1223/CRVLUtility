@@ -374,3 +374,25 @@ float crvlUtility::findMode(vector<float> &src){
 	//printf("Mode : %f\n", mode);
 	return mode;
 }
+
+// Zero Padding. Add zeros in front of a number  
+string crvlUtility::ZeroPadNumber(int num, int pad)
+	{
+		stringstream ss;
+
+		// the number is converted to string with the help of stringstream
+		ss << num;
+		string ret;
+		ss >> ret;
+
+		if (pad < 1){
+			return ret;
+		}
+		else{
+			// Append zero chars
+			int str_length = ret.length();
+			for (int i = 0; i < pad - str_length; i++)
+				ret = "0" + ret;
+			return ret;
+		}
+	}
