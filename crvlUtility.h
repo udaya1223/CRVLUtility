@@ -45,7 +45,10 @@ public:
 	// Sort a float array in ascending order
 	static float findMode(vector<float> &src);
 	
-	static string ZeroPadNumber(int num, int pad)
+	static string ZeroPadNumber(int num, int pad);
+	
+	// Linear interpolation
+	static bool linearInterpolation(double *inVals, double *outVals, int inCount, int outCount);
 	
 private:
 
