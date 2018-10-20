@@ -396,3 +396,23 @@ string crvlUtility::ZeroPadNumber(int num, int pad)
 			return ret;
 		}
 	}
+
+// Linear interpolation
+bool crvlUtility::linearInterpolation(double *inVals, double *outVals, int inCount, int outCount)
+{
+	if (inCount > outCount)
+		return false;
+
+	double mult = inCount / (double)outCount;
+	int j = 0;
+	double i = 0;
+	for (j = 0, i = 0.; i <= inCount; i += mult, j++)
+	{
+		int k = (int)floor(i);
+		double a = i - k;
+		double y = a * inVals[k + 1] + (-inVals[k] * a + inVals[k]);
+		outVals[j] = y;
+		//printf("%f %f\n", i, y);
+	}
+	return true;
+}
